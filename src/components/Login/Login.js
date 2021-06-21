@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './Login.css';
 import firebase from "firebase/app";
 import "firebase/auth";
 import firebaseConfig from './firebase.Config'
 
 import { FcGoogle } from 'react-icons/fc';
-import { Link } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
+import { JobContext } from '../../App';
 
 if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
@@ -14,38 +15,29 @@ if (!firebase.apps.length) {
 }
 
 const Login = () => {
+    let location = useLocation()
+    let { from } = location.state || { from: { pathname: "/" } };
+    let history = useHistory()
     var provider = new firebase.auth.GoogleAuthProvider();
+    const [context, setcontext] = useContext(JobContext);
 
     function GoogleSignIn() {
         firebase.auth()
             .signInWithPopup(provider)
             .then((result) => {
-                // const newUser = {
-                //     email: result.user.email,
-                //     name: result.user.displayName,
-                //     image: result.user.photoURL
-                // }
-                // setLoggedInUser(newUser)
-                // storeAuthToken()
-                // history.replace(from);
-                console.log(result)
+                const newUser = {
+                    ...context,
+                    jobSeekarIsLogin: true,
+                    email: result.user.email
+                }
+                setcontext(newUser)
+                history.replace(from);
             }).catch((error) => {
 
                 var errorMessage = error.message;
                 console.log(errorMessage)
             });
     }
-
-    // const handleSubmit = e => {
-    //     firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
-    //         .then(res => {
-    //             console.log(res)
-    //         })
-    //         .catch(error => {
-    //             console.log(error.message);
-    //         });
-    //     e.preventDefault();
-    // }
 
     return (
         <section className='login' id="login">

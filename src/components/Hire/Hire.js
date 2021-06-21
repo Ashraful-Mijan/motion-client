@@ -35,7 +35,7 @@ const Hire = () => {
         firebase.auth().createUserWithEmailAndPassword(data.email, data.password)
             .then((userCredential) => {
                 // Signed in 
-                const newEmployer = { ...context, employer: { loginEmployer: true } }
+                const newEmployer = { ...context, employer: { loginEmployer: true, companyName: data.companyName } }
                 setContext(newEmployer)
                 shiftPackgs()
                 history.replace(from);

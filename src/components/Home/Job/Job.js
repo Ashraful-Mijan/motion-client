@@ -1,10 +1,15 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 const Job = ({job}) => {
-    const {company, closeDate, jobTitle, location} = job;
+    let history = useHistory()
+    const {company, closeDate, jobTitle, location, _id} = job;
+    function handleApply(id) {
+        history.push(`/job/${id}`)
+    }
     return (
         <div className="col-md-4 mb-2">
-            <div class="card h-100">
+            <div onClick={()=>handleApply(`${_id}`)} class="card h-100">
                 <div class="card-body">
                     <h5 class="card-title text-info">{jobTitle}</h5>
                     <span className='d-inline-block text-primary px-1'>Close Date: {closeDate}</span>

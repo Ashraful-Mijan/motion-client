@@ -173,23 +173,13 @@ const Stripe = () => {
         };
 
         return paymentMethod ? (
-            //     <div className="Result">
-            //         <div className="ResultTitle" role="alert">
-            //             Payment successful
-            // </div>
-            //         <div className="ResultMessage">
-            //             Thanks for trying Stripe Elements. No money was charged, but we
-            //             generated a PaymentMethod: {paymentMethod.id}
-            //         </div>
-            //         {/* <ResetButton onClick={reset} /> */}
-            //     </div>
             <>
                 {/* <div class="alert alert-warning alert-dismissible fade show" role="alert">
                     <strong>Your Payment is successful!</strong>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div> */}
                 {alert('Your Payment is successful')}
-                {history.push('/postForm')}
+                {history.push('/emDashboard')}
             </>
         ) : (
                 <form className="Form" onSubmit={handleSubmit}>
@@ -255,8 +245,6 @@ const Stripe = () => {
         ]
     };
 
-    // Make sure to call `loadStripe` outside of a component’s render to avoid
-    // recreating the `Stripe` object on every render.
     const stripePromise = loadStripe("pk_test_6pRNASCoBOKtIshFeQd4XMUh");
 
     return (

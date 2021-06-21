@@ -6,10 +6,11 @@ const Jobs = () => {
     const [PHP, setPHP] = useState(false)
     const [REACT, setREACT] = useState(false)
     const [WEB, setWEB] = useState(false)
+
     useEffect(() => {
-        fetch('http://localhost:4000/getJobs')
+        fetch('http://localhost:4000/getApproval')
             .then(res => res.json())
-            .then(data => setJobs(data))
+            .then(data => setJobs(data.sort((a, b) => b - a)))
     }, [])
 
     const PHPDevelper = jobs.filter(web => web.jobTitle === 'PHP Developer')
@@ -32,25 +33,29 @@ const Jobs = () => {
         setWEB(false);
     }
 
-    console.log(jobs)
     return (
         <section className='jobs' id="jobs">
             <div className="container py-5">
-                <button onClick={php} className='btn btn-primary secondary-bg text-warning border border-info mx-2 my-2'>PHP Developer</button>
-                <button onClick={react} className='btn btn-primary secondary-bg text-warning border border-info mx-2 my-2'>React Developer</button>
-                <button onClick={web} className='btn btn-primary secondary-bg text-warning border border-info mx-2 my-2'>Web Developer</button>
+                <div className='btnContainer py-3 w-75 text-center mx-auto'>
+                    <div className="btnText">
+                        <h4>Popular searches</h4>
+                    </div>
+                    <button onClick={php} className='btn btn-primary secondary-bg text-warning border border-info mx-2 my-2'>PHP Developer</button>
+                    <button onClick={react} className='btn btn-primary secondary-bg text-warning border border-info mx-2 my-2'>React Developer</button>
+                    <button onClick={web} className='btn btn-primary secondary-bg text-warning border border-info mx-2 my-2'>Web Developer</button>
+                </div>
                 <div className="row">
-                    {PHP&&
-                        PHPDevelper.map(job=> <Job key={job._id} job={job} />)
+                    {PHP &&
+                        PHPDevelper.slice(0, 19).map(job => <Job key={job._id} job={job} />)
                     }
-                    {WEB&&
-                        WEBDevelper.map(job=> <Job key={job._id} job={job} />)
+                    {WEB &&
+                        WEBDevelper.slice(0, 19).map(job => <Job key={job._id} job={job} />)
                     }
-                    {REACT&&
-                        REACTDevelper.map(job=> <Job key={job._id} job={job} />)
+                    {REACT &&
+                        REACTDevelper.map(job => <Job key={job._id} job={job} />)
                     }
                     {!PHP && !WEB && !REACT &&
-                        jobs.map(job=> <Job key={job._id} job={job} />)
+                        jobs.slice(0, 19).map(job => <Job key={job._id} job={job} />)
                     }
                 </div>
             </div>
