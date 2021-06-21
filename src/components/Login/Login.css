@@ -1,0 +1,6 @@
+.login {
+    height: 100vh;
+    background-image: url('../../img/loginbg.jpg');
+    background-size: cover;
+    padding: 200px 0;
+}
